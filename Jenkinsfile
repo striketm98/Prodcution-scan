@@ -5,7 +5,7 @@ def target
 pipeline {
      agent any
      parameters {
- 
+         
          string defaultValue: "http://demo.testfire.net",
                  description: 'Target URL to scan',
                  name: 'TARGET'
@@ -76,6 +76,7 @@ pipeline {
                              -I
                          """
                      }
+                     //-x report-$(date +%d-%b-%Y).xml
                      else{
                          echo "Something went wrong..."
                      }
