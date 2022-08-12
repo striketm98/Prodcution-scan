@@ -96,11 +96,7 @@ pipeline {
      post {
              always {
                  echo "Removing container and images"
-                 sh '''
-                     sudo docker stop owasp
-                     sudo docker rm owasp
-                     sudo docker rmi owasp/zap2docker-stable 
-                 '''
+                
              }
          }
 }
