@@ -6,9 +6,6 @@ def target
 pipeline {
      agent any
      parameters {
-         choice  choices: ["Baseline", "APIS", "Full"],
-                 description: 'Type of scan that is going to perform inside the container',
-                 name: 'SCAN_TYPE'
  
          string defaultValue: "http://demo.testfire.net",
                  description: 'Target URL to scan',
@@ -79,25 +76,6 @@ pipeline {
                              -x report.xml \
                              -I
                          """
-                     }
-                     else if(scan_type == "APIS"){
-                         sh """
-                             sudo docker exec owasp \
-                             zap-api-scan.py \
-                             -t $target \
-                             -x report.xml \
-                             -I
-                         """
-                     }
-                     else if(scan_type == "Full"){
-                         sh """
-                             sudo docker exec owasp \
-                             zap-full-scan.py \
-                             -t $target \
-                             -x report.xml
-                             -I
-                         """
-                        //-x report-$(date +%d-%b-%Y).xml
                      }
                      else{
                          echo "Something went wrong..."
