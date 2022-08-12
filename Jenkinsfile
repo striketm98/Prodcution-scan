@@ -5,7 +5,9 @@ def target
 pipeline {
      agent any
      parameters {
-         
+         choice  choices: ["Baseline"],
+                 description: 'Type of scan that is going to perform inside the container',
+                 name: 'SCAN_TYPE'
          string defaultValue: "http://demo.testfire.net",
                  description: 'Target URL to scan',
                  name: 'TARGET'
@@ -96,6 +98,11 @@ pipeline {
      post {
              always {
                  echo "Removing container and images"
+                 sh '''
+                     sudo docker stop owasp
+                     sudo docker rm owasp
+                     sudo docker rmi owasp/zap2docker-stable 
+                 '''
                 
              }
          }
