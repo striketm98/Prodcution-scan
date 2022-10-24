@@ -5,7 +5,7 @@ def target
 pipeline {
      agent any
      parameters {
-         choice  choices: ["Baseline"],
+         choice  choices: ["Baseline", "APIS", "Full"],
                  description: 'Type of scan that is going to perform inside the container',
                  name: 'SCAN_TYPE'
          string defaultValue: "http://demo.testfire.net",
@@ -74,11 +74,11 @@ pipeline {
                              sudo docker exec owasp \
                              zap-baseline.py \
                              -t $target \
-                             -x report.xml \
+                             -r report.html \
                              -I
                          """
                      }
-                     //-x report-$(date +%d-%b-%Y).xml
+                     //-r report-$(date +%d-%b-%Y).html
                      else{
                          echo "Something went wrong..."
                      }
@@ -89,7 +89,7 @@ pipeline {
              steps {
                  script {
                      sh '''
-                         sudo docker cp owasp:/zap/wrk/report.xml ${WORKSPACE}/report.xml
+                         sudo docker cp owasp:/zap/wrk/report.html ${WORKSPACE}/report.html
                      '''
                  }
              }
