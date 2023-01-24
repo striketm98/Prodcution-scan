@@ -102,6 +102,7 @@ pipeline {
                      sudo docker stop owasp
                      sudo docker rm owasp
                      sudo docker rmi owasp/zap2docker-stable 
+                     sudo rm Jenkinsfile
                  '''
                 
              }
